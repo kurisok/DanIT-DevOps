@@ -1,0 +1,138 @@
+API Test Results
+
+--- GET --- 1
+Status Code: 200
+Response: []
+
+--- POST --- 2
+Status Code: 201
+Response: {
+    "age": 20,
+    "first_name": "John",
+    "id": 1,
+    "last_name": "Doe"
+}
+
+--- POST --- 3
+Status Code: 201
+Response: {
+    "age": 22,
+    "first_name": "Jane",
+    "id": 2,
+    "last_name": "Smith"
+}
+
+--- POST --- 4
+Status Code: 201
+Response: {
+    "age": 19,
+    "first_name": "Alice",
+    "id": 3,
+    "last_name": "Johnson"
+}
+
+--- GET --- 5
+Status Code: 200
+Response: [
+    {
+        "age": "20",
+        "first_name": "John",
+        "id": "1",
+        "last_name": "Doe"
+    },
+    {
+        "age": "22",
+        "first_name": "Jane",
+        "id": "2",
+        "last_name": "Smith"
+    },
+    {
+        "age": "19",
+        "first_name": "Alice",
+        "id": "3",
+        "last_name": "Johnson"
+    }
+]
+
+--- PATCH --- 6
+Status Code: 200
+Response: {
+    "age": 25,
+    "first_name": "Jane",
+    "id": "2",
+    "last_name": "Smith"
+}
+
+--- GET --- 7
+Status Code: 200
+Response: {
+    "age": "25",
+    "first_name": "Jane",
+    "id": "2",
+    "last_name": "Smith"
+}
+
+--- PUT --- 8
+Status Code: 200
+Response: {
+    "age": 20,
+    "first_name": "Alice",
+    "id": "3",
+    "last_name": "Brown"
+}
+
+--- GET --- 9
+Status Code: 200
+Response: {
+    "age": "20",
+    "first_name": "Alice",
+    "id": "3",
+    "last_name": "Brown"
+}
+
+--- GET --- 10
+Status Code: 200
+Response: [
+    {
+        "age": "20",
+        "first_name": "John",
+        "id": "1",
+        "last_name": "Doe"
+    },
+    {
+        "age": "25",
+        "first_name": "Jane",
+        "id": "2",
+        "last_name": "Smith"
+    },
+    {
+        "age": "20",
+        "first_name": "Alice",
+        "id": "3",
+        "last_name": "Brown"
+    }
+]
+
+--- DELETE --- 11
+Status Code: 200
+Response: {
+    "message": "Student deleted successfully"
+}
+
+--- GET --- 12
+Status Code: 200
+Response: [
+    {
+        "age": "25",
+        "first_name": "Jane",
+        "id": "2",
+        "last_name": "Smith"
+    },
+    {
+        "age": "20",
+        "first_name": "Alice",
+        "id": "3",
+        "last_name": "Brown"
+    }
+]
+
