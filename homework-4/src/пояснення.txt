@@ -1,0 +1,45 @@
+- створеня юзера
+sudo adduser bob
+
+- додаємо права адміністратора
+sudo usermod -aG sudo bob
+
+- переход в юзера bob
+su - bob
+
+- створеня файла з кодом (файл з кодом 'change_hostname.sh')
+nano /home/bob/change_hostname.sh
+код:
+	#!/bin/bash
+
+	# Зміна ім'я хоста
+	sudo hostnamectl set-hostname ubuntu22
+
+	# Вивод логу в консоль
+	echo "$(hostname)"
+
+- надання прав для виконання
+chmod 700 /home/bob/change_hostname.sh
+
+- запуска сценарію
+/home/bob/change_hostname.sh
+
+- усі дії описані вище знаходяться в скріншоту 'all.png'
+
+- перезаходим в копютер але теперь від імені юзера bob
+
+- командою hostname виводемо яке зараз імя у хоста (скрішот 'hostname.png')
+
+
+
+- Встановлення nginx та перевірка портів через netstat
+
+- обновлюємо apt і тільки після встановлюємо nginx
+sudo apt update
+sudo apt install nginx
+
+- Перевірка роботи nginx (скрішот 'test-nginx.png')
+sudo systemctl status nginx
+
+- перевірка відкритих портів (у мене таких нема, скрішот 'netstat.png')
+sudo netstat -tuln

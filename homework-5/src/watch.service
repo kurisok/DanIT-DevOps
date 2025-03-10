@@ -1,0 +1,11 @@
+[Unit]
+Description=Monitor ~/watch directory for new files
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /home/kali/watch_script.sh
+Restart=always
+User=kali
+
+[Install]
+WantedBy=multi-user.target
