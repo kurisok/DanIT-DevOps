@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('docker-credentials-id')
+    }
+    stages {
+        stage('Clone repository') {
+            steps {
+                script {
+                    sh 'GIT_SSH_COMMAND="ssh -i /var/lib/jenkins/.ssh/for-my-hw.pem" git clone git@github.com:kurisok/forStep2.git' // зробив так бо по іншому гіт постійно ругався
+                }
+            }
+        }
+        stage('Build Docker image') {
+            steps {
+                script {
+                    sh 'cd forStep2 && docker build -t rukurok/for-step_project .'
+                }
+            }
+        }
+        stage('Run tests') {
+            steps {
+                script {
+                    def result = sh(script: 'cd forStep2 && docker run --rm rukurok/for-step_project', returnStatus: true)
+                    if (result != 0) {
+                        error("Tests failed")
+                    }
+                }
+            }
+        }
+        stage('Push Docker image to Docker Hub') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                script {
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    sh 'docker push rukurok/for-step_project'
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            echo 'Tests failed'
+        }
+    }
+}

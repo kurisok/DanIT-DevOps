@@ -1,0 +1,56 @@
+- name: Install Jenkins and Nginx
+  hosts: jenkins_master
+  become: yes
+
+  tasks:
+    - name: Install required dependencies
+      apt:
+        name:
+          - openjdk-11-jdk
+          - gnupg
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Add Jenkins repository GPG key
+      get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        dest: /usr/share/keyrings/jenkins-keyring.asc
+        mode: '0644'
+
+    - name: Add Jenkins apt repository
+      apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+        state: present
+        filename: jenkins
+
+    - name: Update apt and install Jenkins
+      apt:
+        name: jenkins
+        state: present
+        update_cache: yes
+
+    - name: Ensure Jenkins is started and enabled
+      systemd:
+        name: jenkins
+        enabled: yes
+        state: started
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy Nginx config
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes

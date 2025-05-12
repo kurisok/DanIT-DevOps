@@ -1,0 +1,75 @@
+Started by user Makarenko Artem
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/my-docker-pipeline
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKERHUB_CREDENTIALS or $DOCKERHUB_CREDENTIALS_PSW
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repository)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ GIT_SSH_COMMAND=ssh -i /var/lib/jenkins/.ssh/for-my-hw.pem git clone git@github.com:kurisok/forStep2.git
+Cloning into 'forStep2'...
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker image)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ cd forStep2
++ docker build -t rukurok/for-step_project .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   72.7kB
+
+Step 1/8 : FROM node:14
+ ---> 1d12470fa662
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> 287166051e84
+Step 3/8 : COPY package*.json ./
+ ---> Using cache
+ ---> 896b1c54f0f5
+Step 4/8 : RUN npm install
+ ---> Using cache
+ ---> 52993696f6d5
+Step 5/8 : COPY . .
+ ---> db2c3b109282
+Step 6/8 : EXPOSE 3000
+ ---> Running in 89b81a095b31
+ ---> Removed intermediate container 89b81a095b31
+ ---> ad4b8c3ab5bf
+Step 7/8 : ENTRYPOINT ["npm"]
+ ---> Running in ff20e43b7fd4
+ ---> Removed intermediate container ff20e43b7fd4
+ ---> 2c4e7fe7865e
+Step 8/8 : CMD ["start"]
+ ---> Running in ee05a32c6dcd
+ ---> Removed intermediate container ee05a32c6dcd
+ ---> 9d55525bfdf5
+Successfully built 9d55525bfdf5
+Successfully tagged rukurok/for-step_project:latest
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run tests)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ cd forStep2
++ docker run --rm rukurok/for-step_project
+
+> app@1.0.0 start /app
+> node ./index.js
+
+App listening
