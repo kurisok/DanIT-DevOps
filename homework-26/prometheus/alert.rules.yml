@@ -1,0 +1,30 @@
+
+groups:
+  - name: system_alerts
+    rules:
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"}) < 0.15
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk space low"
+          description: "Only {{ $value | humanizePercentage }} space left on disk."
+
+      - alert: HighCPUUsage
+        expr: (100 - avg(irate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is above 80%"
+
+      - alert: TargetDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Target is down"
+          description: "The target {{ $labels.instance }} is down."

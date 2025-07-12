@@ -1,0 +1,12 @@
+
+{
+  "__inputs": [],
+  "id": 14282,
+  "uid": null,
+  "title": "cAdvisor Metrics (Imported)",
+  "timezone": "browser",
+  "schemaVersion": 16,
+  "version": 0,
+  "refresh": "5s",
+  "panels": []
+}
