@@ -1,0 +1,9 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - argocd.artem.devops7.test-danit.com
+    https: false
+  extraArgs:
+    - --insecure
